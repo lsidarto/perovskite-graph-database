@@ -77,7 +77,10 @@ h3 {font-family: var(--headerFont);}
   box-shadow: inset 5px -3px 0px 0px white;
 }
 
-.content {background: var(--backgroundColour);}
+.content {
+  background: var(--backgroundColour);
+  position: relative;
+  width: 100vw;}
 
 input:checked + .slider {background-color: #7eb8d8;}
 input:checked + .slider:before {
@@ -139,7 +142,7 @@ input:checked + .slider:before {
 #nav > li > a:hover {opacity: 1;}
 .sticky {background-color: var(--navbarColour);}
 
-.intro {
+.page_title {
   position: relative;
   top: 30vh;
   text-align: center;
@@ -148,12 +151,12 @@ input:checked + .slider:before {
   /* animation: float 2s ease-in-out infinite alternate;  */
   /* mix-blend-mode: color-dodge; */
 }
-@keyframes float {to{ transform: translateY(-2%);}}
-.intro p {
+/* @keyframes float {to{ transform: translateY(-2%);}}
+.landing p {
   font-family: var(--bodyFont);
   font-size: 2vw;
   color:white !important;
-}
+} */
 h2.page_title {
   font-size: 5vw;
   color: #c0ddea !important;
@@ -171,9 +174,6 @@ h3.page_title {
   text-decoration: none;
   font-family: var(--headerFont);
   margin-bottom: 5px;
-}
-.landing {
-  height:90ww;
 }
 #landing a{ /*"scroll down" text*/
   position: absolute;
