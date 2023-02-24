@@ -155,11 +155,11 @@ input:checked + .slider:before {
   color:white !important;
 }
 h2.header {
-  font-size: 9vw;
+  font-size: 5vw;
   color: #c0ddea !important;
 }
 h3.header {
-  font-size: 8vw;
+  font-size: 3vw;
   color: #c0ddea !important;
 }
 
