@@ -79,8 +79,11 @@ h3 {font-family: var(--headerFont);}
 
 .content {
   background: var(--backgroundColour);
-  position: relative;
-  width: 100vw;}
+  position: absolute;
+  width: 100vw;
+  height: auto;
+  /* top: 100vh; */
+}
 
 input:checked + .slider {background-color: #7eb8d8;}
 input:checked + .slider:before {
@@ -142,10 +145,10 @@ input:checked + .slider:before {
 #nav > li > a:hover {opacity: 1;}
 .sticky {background-color: var(--navbarColour);}
 
-.landing {height: 100vw;}
+/* .landing {height: 100vw;} */
 .page_title {
   position: relative;
-  top: 10vh;
+  top: 15vh;
   text-align: center;
   line-height: 0.9;
   z-index: 1;
@@ -205,9 +208,16 @@ h3.page_title {
 
 .bodytext {padding-top: 5%;}
 
-.bio_text {
-  padding-top: 10%;
-  /* animation: float 2s ease-in-out infinite alternate;  */
+#demo { /*the iframe*/
+  height: 70vh;
+  width: 80vw;
+  margin-bottom: 10px;
+
+}
+.demo{
+  width: 100vw;
+  display: flex;
+  justify-content: center;
 }
 
 #pfp {
@@ -374,8 +384,8 @@ footer a span {
 
 /* for all other pages */
 .page_head_spacer{
-  padding-top: 10%;
-  text-align:center;
+  padding-top: 100vh;
+  text-align: center;
 }
 
 /* contact section */
