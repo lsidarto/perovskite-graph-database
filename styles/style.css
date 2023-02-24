@@ -142,9 +142,10 @@ input:checked + .slider:before {
 #nav > li > a:hover {opacity: 1;}
 .sticky {background-color: var(--navbarColour);}
 
+.landing {height: 100vw;}
 .page_title {
   position: relative;
-  top: 30vh;
+  top: 10vh;
   text-align: center;
   line-height: 0.9;
   z-index: 1;
