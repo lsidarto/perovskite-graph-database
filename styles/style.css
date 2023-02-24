@@ -154,11 +154,11 @@ input:checked + .slider:before {
   font-size: 2vw;
   color:white !important;
 }
-.page_title > h2 {
+h2.page_title {
   font-size: 5vw;
   color: #c0ddea !important;
 }
-.page_title > h3 {
+h3.page_title {
   font-size: 3vw;
   color: #c0ddea !important;
 }
