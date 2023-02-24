@@ -1,0 +1,124 @@
+.vertical {
+  min-height: 100vh;
+  height:100%;
+  position: fixed;
+  left: 5%;
+  padding-right: 5px;
+}
+
+ul li:hover::before{ 
+  content: "⭑ ";
+  font-family: var(--symbolFont);
+}
+ul li:hover {
+  transform: scale(1.4);
+  transform-origin: center left;
+  transition: 0.3s;
+}
+
+ul {
+  width: auto;
+  margin-left: 5px;
+  font-family: var(--headerFont);
+}
+ul a{text-decoration: none;}
+ul#vnav {list-style-type: none;}
+
+.page.col{
+  margin: 10px;
+  min-height: 100vh;
+}
+.page.col:nth-of-type(2){ /*col with the content*/
+  flex: 5;
+  padding: 0 3%;
+  overflow: hidden;
+}
+.page.col:nth-of-type(3){ display: contents;}
+
+table {width: 100%;}
+
+th, td {
+  padding: 2px 0;
+  vertical-align: top;
+}
+
+table th{
+  text-align: right;
+}
+table td{
+  text-align: left;
+  padding-left: 2%;
+}
+
+legend {
+  margin: 0 10%;
+  padding-inline: 10px;
+  font-size: 200%;
+  letter-spacing: .05em;
+  font-family: var(--headerFont);
+  opacity: 0.6;
+}
+
+.odd {margin-left:auto;}
+.section {padding: 6% 0;}
+
+#main {transition: margin-left .5s;}
+#vnav.hidden {display:none;}
+#vnav {display:block;}
+.navtoggle {
+  position: fixed;
+  bottom: 7%;
+  left: 4%;
+  z-index: 1;
+  opacity: 0.5;
+  transition: 0.3s;
+}
+.navtoggle:hover{opacity:1;}
+
+@media (max-width: 480px) {
+  #main.page.col {margin-left: 30vw;} /*shift right when nav shown, mobile only*/
+  #main.page.col.hidden {margin-left: 0;} /*shift right when nav shown, mobile only*/
+
+  .vertical{
+    position: fixed;
+    left: 2%;
+    bottom: 14%;
+    min-height: 0;
+    height: fit-content;
+    z-index: 1;
+  }
+  .page.col:nth-of-type(1){display: contents;}
+  .card_body {text-align: right !important;}
+  legend {margin: 0 2%;}
+}
+.card_container {
+  flex-direction: column;
+  align-items: center;
+}
+
+/* card opening */
+.card_text {
+  padding: 0 5%;
+  transition: all 0.3s cubic-bezier(0.36, -0.02, 0.15, 0.98);
+  visibility: visible;
+  max-height: 1000px;
+}
+.card_text.active { 
+  visibility: hidden;
+  max-height: 0;
+}
+
+.card {
+  width: 100%;
+  border-radius: 20px;
+  margin: 10px;
+}
+
+.card_text { 
+  padding: 0 5%;
+  padding-bottom: 2%;
+} 
+.card_title {padding: 2% 1px 0 5%;}
+.card_body {text-align: left;}
+
+#uni {padding: 0 0 0 5%;}
