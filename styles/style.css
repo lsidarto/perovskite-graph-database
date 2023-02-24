@@ -42,6 +42,7 @@ h2 {
   font-family: var(--headerFont);
   letter-spacing: 0.02em;
 }
+
 h3 {font-family: var(--headerFont);}
 .symbol {font-family: var(--symbolFont);}
  
@@ -100,10 +101,6 @@ input:checked + .slider:before {
   left: 0px;
   object-fit:cover;
 }
-.l4 {z-index: -5;}
-.l3 {z-index: -4;}
-.l2 {z-index: -2;}
-.l1 {z-index: -1;}
 
 #longpathbox {
 	position: absolute;
@@ -143,14 +140,13 @@ input:checked + .slider:before {
 .sticky {background-color: var(--navbarColour);}
 
 .intro {
-  position: absolute;
-  top: 40vh;
-  right: 5vw;
-  text-align: right;
+  position: relative;
+  top: 30vh;
+  text-align: center;
   line-height: 0.9;
   z-index: 1;
-  animation: float 2s ease-in-out infinite alternate; 
-  mix-blend-mode: color-dodge;
+  /* animation: float 2s ease-in-out infinite alternate;  */
+  /* mix-blend-mode: color-dodge; */
 }
 @keyframes float {to{ transform: translateY(-2%);}}
 .intro p {
@@ -158,8 +154,12 @@ input:checked + .slider:before {
   font-size: 2vw;
   color:white !important;
 }
+h2.header {
+  font-size: 9vw;
+  color: #c0ddea !important;
+}
 h3.header {
-  font-size: 10vw;
+  font-size: 8vw;
   color: #c0ddea !important;
 }
 
@@ -171,6 +171,9 @@ h3.header {
   text-decoration: none;
   font-family: var(--headerFont);
   margin-bottom: 5px;
+}
+.landing {
+  height:90ww;
 }
 #landing a{ /*"scroll down" text*/
   position: absolute;
