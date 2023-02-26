@@ -15,10 +15,6 @@
     </style>
     <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/symbola" type="text/css"/>
 
-    <!-- gsap -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/MotionPathPlugin.min.js"></script>
-
  </head> 
  <body id="index">
     <div id="nav"> 
@@ -39,11 +35,11 @@
     
     <section id="landing" class="layer">
     
-      <img class="layer" src="resources/landing.png" style="z-index:1">
+      <img class="layer" src="resources/landing.gif" style="z-index:1">
         <div class="page_title">
           <h2 class="page_title">graph databases</h2>
           <h3 class="page_title">for</h3>
-          <h2 class="page_title">perovskite<br>solar cell<br>manufacturing</h2>
+          <h2 class="page_title">perovskite solar cell<br>manufacturing</h2>
         </div>
         
         <a class="scroll" href="#abstract">[scroll]<span></span></a>
@@ -64,44 +60,82 @@
       <!-- actual report -->
       <section id="abstract" class = "bodytext">
         <div class="section_header"><div class="card_div"></div><h2>abstract</h2></div>
-        <div class="subheading">
-          <p>our project<br><br></p>
-        </div>
+          <p class="writeup">&emsp;The Solar Energy Innovation Laboratory (SOLEIL), under Professor David Fenning, has been manufacturing and collecting perovskite solar cell data at an increasing rate. This data, which comes in many different formats, is hard to store, query, and analyze due to its complexity. The team would carry out their analyses by breaking down the data by sample batch and running analysis code on each, creating a lot of redundancies in their data analysis pipeline. In addition, the raw data itself is currently being sent to a Google Drive folder in a partially unregulated manner.
+            <br><br>&emsp;The team hopes to better utilize their data to improve their solar cells - our project seeks to create a database that allows them to record data in a predictable manner, and easily query the data for analysis and visualization purposes. We are looking to use either a Relational Database or a Graph Database approach to clean up and store the team’s raw lab data so that they can easily access and query data as needed.</p>
       </section>
 
       <section id="in" class = "bodytext">
         <div class="section_header"><div class="card_div"></div><h2>introduction</h2></div>
-        <div class="subheading">
-          <p>our project<br><br><b>prior work</b><br><br><b>data description</b></p>
-        </div>
+          <p class="writeup">Our project group works with Prof. David Fenning, an assistant professor in NanoEngineering at UC San Diego, who runs the Solar Energy Innovation Laboratory. The lab aims to manufacture and test solar cells to improve them in different ways - lifespan, efficiency, and manufacturing consistency, to name a few. The lab is in a phase where they have an established manufacturing process and robust data collection, but lack a data storage and analysis procedure that allows for consistency, accessibility, and scaleup. Our group aims to design and build a database solution that allows the lab to organize their existing data, easily add new cells’ data, and efficiently draw insights. Some of the requirements and considerations for this database include:
+            <br><br>&emsp;- Individual, cell-level chemical compositions, linked to traceable batches of chemicals
+            <br>&emsp;- Detailed, cell-level manufacturing data (e.g. steps, completion time)
+            <br>&emsp;- Cell-level performance metrics, in a variety of data types (e.g. single integers vs. entire tables)
+            <br>&emsp;- Fast queries over a large scale of data for visualization and analysis purposes
+            <br>&emsp;- Data insertion, edits, and deletion are operations that are less frequent
+            <br>&emsp;- A modular structure that allows for future addition of new procedures, steps, or metrics
+            <br><br>&emsp;Our group is currently evaluating the differences between a Graph Database and a traditional Relational Database (RDB). We have hypothesized that a Graph Database might be more suitable due to the lab’s need for fast queries; RDBs are theoretically slower due to an O(n) join time in addition to the O(log(n)) lookup time, for both database types. We hope to verify this via testing by the end of this quarter, and commit to the more robust solution. Concurrently, our group is working on a parser to clean and format past data, so that it can be migrated into the new database when it is built.
+          </p>
+          <br><br><b class="subheading">prior work</b><br>
+          <p class="writeup">&emsp;For reference, our group looked at some existing databases to attempt to understand how other people approached storing their data, along with investigating the type of data they held. One of the solutions, “DuraMAT’s Data Hub”, seemed quite basic; it basically was just an online, open-source repository to upload and share data/documents. While the data is shared and easily accessible, one of the cons to this approach is that the data is uploaded in many formats, ranging from CSVs to image files, to PDFs and others, which makes it difficult to perform analysis and queries as it would require tons of data cleaning and wrangling.</p>
+          
+          <br><br><b class="subheading">data description</b><br>
+          <p class="writeup">&emsp;We aim to find a database solution that fits existing perovskite cell data, which has intrinsic, complex relationships - cells have differing chemical compositions, steps, and metrics. solvents or precursors used in cells are from different manufacturing batches, and manufacturing steps themselves contain a differing number of sub-steps and chemicals. This report provides additional detail on the existing data in the following sections.
+          The solution may be applicable to other lab contexts that require records of complex relationships, with a mix of structure and semi-structured data. Any problems that favor fast queries over fast insertion/deletion/edits may also find our work useful. </p>
+            <br><br>
+            
       </section>
 
       <section id="methods" class = "bodytext">
         <div class="section_header"><div class="card_div"></div><h2>methods</h2></div>
-        <div class="subheading">
-          <p><b>existing data pipeline</b><br><br></p>
-        </div>
+          <b class="subheading">existing data pipeline</b>
+          <br><p class="writeup">SOLEIL has been utilizing a system, PASCAL, to output the lab’s manufacturing data. PASCAL:
+            Outputs the sample log json, the run log, the characterization raw data folder, and a dimensionality-reduced single .csv which contains fitted metrics of the raw data.
+            Depending on what the lab operator tasked PASCAL to collect, the raw data is uploaded to the lab’s Google Drive.<br><br>Current metric options from the characterization step are:
+            <br>&emsp;- PL photostability or PL spectroscopy over time
+            <br>&emsp;- Visible light transmission spectroscopy
+            <br>&emsp;- PL image
+            <br>&emsp;- PL spectroscopy
+            <br>&emsp;- Brightfield image
+            <br>&emsp;- Darkfield image
+            </p>
+
+            <br><br><b class="subheading">choosing a database</b>
+            <br><p class="writeup">&emsp;There were two database types that we considered: a traditional relational database (RDB), and a graph database. After discussing with members of the lab team, we noted that the primary requirements for the database were to:
+              <br><br>&emsp;- Store the worklist of manufacturing steps, ideally with all nominal and actual properties/measurements
+              <br>&emsp;- Store all chemicals involved, how they change through the process, and ideally relate them to a batch number 
+              <br>&emsp;- Be easily queryable, especially for individual cell worklists and sorts by cell property
+              <br><br>Considering these requirements, we chose to start with a relational database, as the group was more familiar with these. This would also help us to familiarize ourselves with the data quicker.
+            </p>
+
+
       </section>
 
       <section id="results" class = "bodytext">
         <div class="section_header"><div class="card_div"></div><h2>results</h2></div>
-        <div class="subheading">
-          <p>sdkjfsdkjfh<br><br></p>
-        </div>
+
+        <p class="writeup">&emsp;After graphing the nodes and links from our cleaned/transformed data, we are able to generate a graph for each sample. The figure below shows the contents of one sample:</p>
       </section>
 
       <section id="conc" class = "bodytext">
         <div class="section_header"><div class="card_div"></div><h2>conclusion</h2></div>
-        <div class="subheading">
-          <p><b>limitations</b><br><b>future work</b><br></p>
-        </div>
+        <p class="writeup">Our group implemented a working lab-to-database pipeline by replicating some existing ideas. In our discussions with Kumar and prior research, we found no similar solutions exist. 
+          The usefulness of this solution is largely derived from Neo4j’s Cypher - queries are relatively intuitive and simple to write, though we would need to communicate more with Fenning’s data team to see if there are necessary actions that Cypher does not support. 
+        </p>
+
+        <br><br><b class="subheading">example queries</b>
+        <br><br><b class="subheading">limitations</b>
+        <p class="writeup">&emsp;The Methods section details how we have since solved two of the main limitations we had - the Google Drive rate limit, and the storage of characterization outputs. Our current challenge is working out hosting - Neo4j Docker only runs locally as far as we are aware, and other versions of Neo4j with managed databases are paid. 
+          <br>&emsp;There are also further financial and technical limitations with Neo4j itself, which has different tiers, pricing, memory limits, and other constraints we have yet to run into. Further research is needed; we detail this below.   </p>
+        <br><br><b class="subheading">future work</b>
+        <p class="writeup">&emsp;Our group has also determined some courses of action we would ideally take from here - there are several aspects of this solution that need to be fleshed out further:
+          <br>&emsp;An important step moving forward would be to meet with the lab team to talk about the best way to output “workable” data moving forward, so that at the end of our data pipeline they can run any queries or analyses they might need easily. 
+          <br>&emsp;Last but not least, we would need to look further into Neo4j for the future. Assuming this is a model that will be adopted and used for a while, we need to investigate pricing, size limits, and query effectiveness/efficiency as the database grows in size. We also would like to become more familiar with their Cypher query language to understand not only its limitations but also its potential for how complex queries can be.
+          </p>         
       </section>
 
       <section id="refs" class = "bodytext">
         <div class="section_header"><div class="card_div"></div><h2>references</h2></div>
-        <div class="subheading">
-          <p><b>existing data pipeline</b><br><br></p>
-        </div>
+          <p class="writeup"><b>existing data pipeline</b><br><br></p>
       </section>
 
       <footer>
