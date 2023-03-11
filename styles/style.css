@@ -32,12 +32,16 @@ html, body { max-width: 100%; overflow-x: hidden;}
 body {font-family: var(--bodyFont);}
 svg {transform: translateZ(0); /* Fix Safari rendering bug */}
 
-/* .col {flex: 1; }
-.row {display: flex;} */
+.col {flex: 1; display: flex; align-items: center; flex-direction: column;}
+.row {display: flex;flex-wrap: wrap;}
 h2 {
   font-family: var(--headerFont);
   letter-spacing: 0.02em;
 }
+
+.halfw {height: 250px;}
+
+.qw {height: 150px;}
 
 h3 {font-family: var(--headerFont);}
  
