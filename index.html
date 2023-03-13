@@ -19,12 +19,11 @@
  <body id="index">
     <div id="nav"> 
         <li><a href="#demo"><h3>demo</h3></a></li>
-        <li><a href="#abstract">abstract</a></li> 
-        <li><a href="#in">intro</a></li>
+        <li><a href="#ab">abstract</a></li> 
+        <li><a href="#bg">project background</a></li>
         <li><a href="#methods">methods</a></li>
         <li><a href="#results">results</a></li>
-        <li><a href="#conc">conclusions</a></li>
-        <li><a href="#refs">references</a></li>
+        <li><a href="#ack">acknowledgements</a></li>
         <li><label class="switch">
           <div>
             <input type="checkbox"/>
@@ -52,7 +51,7 @@
       
         <section id="demo">
           <div class="section_header"><h2>demo</h2></div>
-          <p class="writeup">A static view of a subset of the database.</p>
+          <p class="writeup">An interactive static view of a subset of the database.</p>
 
           <div class="demo"> 
         <iframe id="demo" src="https://graphxr.kineviz.com/share/63f7d3193bb85f1508299ec7/Capstone%20DMBS/63f7d4b43bb85f150829a0d3/Capstone%20sample%20view"> </iframe>
@@ -60,32 +59,23 @@
       </section>
         
       <!-- actual report -->
-      <section id="abstract" class = "bodytext">
-        <div class="section_header"><div class="card_div"></div><h2>introduction</h2></div>
+      <section id="in" class = "bodytext">
+        <div class="section_header"><div class="card_div"></div><h2>abstract</h2></div>
           <p class="writeup">&emsp; The Solar Energy Innovation Laboratory (SOLEIL), under Professor David Fenning, manufactures and collects increasing amounts of perovskite solar cell data. SOLEIL varies chemicals, processes, and conditions for each cell to find the manufacturing process that produces optimal solar cells.</p>
-          <br><br><b class="subheading">existing data pipeline</b>
+          <br><b class="subheading">the problem</b>
           <p class="writeup">
-              &emsp;- Cell output data is spread across different folders, files, and data types <b>(Figure 1)</b>. Output structure and naming conventions also vary between lab members
-              <br>&emsp;- The lab’s machine, PASCAL, uploads data to a Google Drive folder in a partially unregulated manner
-              <br>&emsp;- Cost of storage increases with volume of data, making data storage critical <b>(Figure 2)</b>.
-              <br>&emsp;- The data associated with one sample's manufacturing process is unstructured and varies batch to batch.
-              <br><br>
-
-              <div class="row"><div class="col"><b>Figure 1</b><img class="halfw" src="resources/f1.png">
-              </div><div class="col"><b>Figure 2</b><img  class="halfw" src="resources/f2.png"></div></div>
-          </p>
-          <br><br><b class="subheading">the problem</b>
-          <p class="writeup">
-              &emsp; Because the data comes in many different and complex formats, it's hard to store, query, and analyze; detecting patterns in their data will allow the lab to find the optimal manufacturing procedure, saving critical time and money.
-              <br><br>
-              Our project worked to create a database ("DB") that allows the lab to record data in a flexible and predictable manner, and easily query the data for analysis and visualization purposes.
+              &emsp; Because the data comes in many different and complex formats, it's hard to store, query, and analyze; detecting patterns in their data will allow the lab to make data-driven choices to improve their research, saving critical time and money.
+              <br>&emsp; Our project worked to create a database ("DB") that allows the lab to record data in a flexible and predictable manner, and easily query the data for analysis and visualization purposes.
           </p>
       </section>
 
-      <section id="in" class = "bodytext">
+      <section id="bg" class = "bodytext">
         <div class="section_header"><div class="card_div"></div><h2>project background</h2></div>
           <b class="subheading">database requirements</b><br>
-          <p class="writeup">&emsp;The SOLEIL lab aims to manufacture and test perovskite solar cells to improve them in different ways - lifespan, efficiency, and manufacturing consistency, to name a few. The lab has an established manufacturing process and robust data collection, but lack a data storage and analysis procedure that allows for consistency, accessibility, and scaleup.
+          <p class="writeup">&emsp;The SOLEIL lab aims to manufacture and test perovskite solar cells to improve them in different ways - lifespan, efficiency, and manufacturing consistency, to name a few. 
+            Perovskite cell manufacturing data has intrinsic, complex relationships. Cell samples have differing chemical compositions, steps, and metrics. Solvents or precursors used in cells are from different manufacturing batches, and manufacturing steps themselves contain a differing number of sub-steps and chemicals. 
+ 
+            <br>&emsp;The lab has an established manufacturing process and robust data collection, but lack a data storage and analysis procedure that allows for consistency, accessibility, and scaleup.
             A successful, useful database solution involves consolidating:
             <br><br>&emsp;- Individual, cell-level chemical compositions, linked to traceable batches of chemicals
             <br>&emsp;- Detailed, cell-level manufacturing data (e.g. steps, completion time)
@@ -96,15 +86,20 @@
 
             <br><br>All of which ultimately allows the lab to organize their existing data, easily add new cells' data, and efficiently draw insights. 
           </p>
-          <br><br><b class="subheading">prior/existing work</b><br>
-          <p class="writeup">&emsp;We evaluated a graph database, a traditional tabular database, and a Relational Database (RDB). We hypothesized that a Graph Database might be more suitable due to the lab’s need for fast queries.
-          <br><br>&emsp;Out of the existing perovskite cell databases we found that only one, <a href="https://www.perovskitedatabase.com/home">The Perovskite Database</a>, attempted to store manufacturing data; the rest were primarily concerned with chemical compositions, or broader research in general.
-          The database, however, being open source, did not address most of the core requirements we identified above.
+          <br><b class="subheading">existing data pipeline</b>
+          <p class="writeup">
+              &emsp;- Cell output data is spread across different folders, files, and data types <b>(Figure 1)</b>. Output structure and naming conventions also vary between lab members
+              <br>&emsp;- The lab’s machine, PASCAL, uploads data to a Google Drive folder in a partially unregulated manner
+              <br>&emsp;- Cost of storage increases with volume of data, making data storage critical <b>(Figure 2)</b>.
+              <br>&emsp;- The data associated with one sample's manufacturing process is unstructured and varies batch to batch.
+              <br><br>
+
+              <div class="row"><div class="col"><b>Figure 1</b><img class="halfw" src="resources/f1.png">
+              </div><div class="col"><b>Figure 2</b><img  class="halfw" src="resources/f2.png"></div></div>
           </p>
-          <br><br><b class="subheading">data description</b><br>
-          <p class="writeup">&emsp;Perovskite cell manufacturing data has intrinsic, complex relationships. Cell samples have differing chemical compositions, steps, and metrics. Solvents or precursors used in cells are from different manufacturing batches, and manufacturing steps themselves contain a differing number of sub-steps and chemicals. 
- 
-          <br>&emsp;Currently, a lab member will run a Jupyter Notebook to start manufacturing a batch of cells with PASCAL, which is currently (previous batches were handled differently) configured to output two folders:
+          <br><b class="subheading">data description</b><br>
+          <p class="writeup">
+          &emsp;Currently, a lab member will run a Jupyter Notebook to start manufacturing a batch of cells with PASCAL, which is currently (previous batches were handled differently) configured to output two folders:
           <br><br>&emsp;1&#41; containing a JSON <b>worklist</b> of a chain of steps that each cell sample undergoes, and
           <br>&emsp;2&#41; containing <b>characterization outputs</b> &#40;measurements on metrics that indicate the quality of a cell&#41; and details of the step that captured that metric in another JSON.
 
@@ -119,7 +114,10 @@
             <div class="row"><div class="col"><b>Figure 3</b><img src="resources/f3.png" class="halfw"><br></div><div class="col"><b>Figure 4</b><img src="resources/f4.png" class="qw">
             </div></div>
           </p>
-  
+          <br><b class="subheading">prior/existing database solutions</b><br>
+          <p class="writeup">&emsp;Out of the existing perovskite cell databases we found that only one, <a href="https://www.perovskitedatabase.com/home">The Perovskite Database</a>, attempted to store manufacturing data; the rest were primarily concerned with chemical compositions, or broader research in general.
+          The database, however, being open source, did not address most of the core requirements we identified above.
+          </p>
       </section>
 
       <section id="methods" class = "bodytext">
@@ -132,7 +130,7 @@
             <br>&emsp;&emsp;2&#41; A tabular, relational database ("RDB")
             <br>&emsp;&emsp;3&#41; A Neo4j graph database
             
-            <br><br><br><b>Tabular Databases</b><br>
+            <br><br><b>Tabular Databases</b><br>
             &emsp;<b>Database 1</b> involved storing entire JSON worklists for each sample into columns in a single table, which can be queried via some versions of SQL. 
             <br>&emsp;<b>Database 2</b> involved a fully fledged (PostgreSQL) relational database.
             <br><br>While simple, there are drawbacks:
@@ -190,17 +188,12 @@
         </p>
         </section>
 
-      <section id="conc" class = "bodytext">
+      <section id="ack" class = "bodytext">
         <div class="section_header"><div class="card_div"></div><h2>acknowledgements</h2></div>
         <p class="writeup">&emsp;Special thanks to:
           <br>&emsp;- Prof. David Fenning, and SOLEIL members Deniz Cakan and KC Wong for resources and guidance throughout the project. Wong also provided Figures 1 and 2.
           <br>&emsp;- Rishi Kumar for data strategy guidance.
         </p>
-      </section>
-
-      <section id="refs" class = "bodytext">
-        <div class="section_header"><div class="card_div"></div><h2>references</h2></div>
-          <p class="writeup"><b>existing data pipeline</b><br><br></p>
       </section>
 
       <footer>
