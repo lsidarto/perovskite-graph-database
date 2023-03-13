@@ -72,7 +72,7 @@
               <br><br>
 
               <div class="row"><div class="col"><b>Figure 1</b><img class="halfw" src="resources/f1.png">
-              </div><div class="col"><b>Figure 2</b><img  class="halfw" src="resources/f1.png"></div></div>
+              </div><div class="col"><b>Figure 2</b><img  class="halfw" src="resources/f2.png"></div></div>
           </p>
           <br><br><b class="subheading">the problem</b>
           <p class="writeup">
@@ -104,23 +104,19 @@
           <br><br><b class="subheading">data description</b><br>
           <p class="writeup">&emsp;Perovskite cell manufacturing data has intrinsic, complex relationships. Cell samples have differing chemical compositions, steps, and metrics. Solvents or precursors used in cells are from different manufacturing batches, and manufacturing steps themselves contain a differing number of sub-steps and chemicals. 
  
-          <br>&emsp;Currently, a lab member will run a Jupyter notebook to start manufacturing a batch of cells with PASCAL, which is currently (previous batches were handled differently) configured to output two folders:
+          <br>&emsp;Currently, a lab member will run a Jupyter Notebook to start manufacturing a batch of cells with PASCAL, which is currently (previous batches were handled differently) configured to output two folders:
           <br><br>&emsp;1&#41; containing a JSON <b>worklist</b> of a chain of steps that each cell sample undergoes, and
           <br>&emsp;2&#41; containing <b>characterization outputs</b> &#40;measurements on metrics that indicate the quality of a cell&#41; and details of the step that captured that metric in another JSON.
 
           <br><br>Current metrics from the characterization step are:
-            <br>&emsp;- PL photostability or PL spectroscopy over time
-            <br>&emsp;- Visible light transmission spectroscopy
-            <br>&emsp;- PL spectroscopy
-            <br>&emsp;- PL image
-            <br>&emsp;- Brightfield image
-            <br>&emsp;- Darkfield image<br>
-            Each sample will have one of each.
+            <br>&emsp;- PL image (<b>Figure 3</b>)
+            <br>&emsp;- Brightfield image (<b>Figure 3</b>)
+            <br>&emsp;- Darkfield image (<b>Figure 3</b>)
+            <br>&emsp;- Visible light transmission spectroscopy (<b>Figure 4</b>)
+            <br>&emsp;- PL spectroscopy (<b>Figure 4</b>)
+            <br>Each sample will have one of each. Images are 1080x1440 each, and CSVs range up to several thousand rows.
             <br><br>
-
-            <b>Characterization output examples:</b>
-            <br>&emsp;Images are 1080x1440 each, and CSVs range up to several thousand rows.
-            <br><br><div class="row"><div class="col"><img src="resources/f3.png" class="halfw"><br></div><div class="col"><img src="resources/f4.png" class="qw">
+            <div class="row"><div class="col"><b>Figure 3</b><img src="resources/f3.png" class="halfw"><br></div><div class="col"><b>Figure 4</b><img src="resources/f4.png" class="qw">
             </div></div>
           </p>
   
@@ -137,54 +133,69 @@
             <br>&emsp;&emsp;3&#41; A Neo4j graph database
             
             <br><br><br><b>Tabular Databases</b><br>
-            1&#41; involved storing entire JSON worklists for each sample into columns in a single table, which can be queried via some versions of SQL. 
-            <br>2&#41; involved a fully fledged (PostgreSQL) relational database.
+            &emsp;<b>Database 1</b> involved storing entire JSON worklists for each sample into columns in a single table, which can be queried via some versions of SQL. 
+            <br>&emsp;<b>Database 2</b> involved a fully fledged (PostgreSQL) relational database.
             <br><br>While simple, there are drawbacks:
-            <br>&emsp;- Lots of duplicate data and empty cells due to varying numbers of manufacturing steps per sample.
-            <br>&emsp;&emsp; e.g. Some cells had an anti-solvent, and some don't - this column has substantial empty entries.
-            <br>&emsp;- Fixed tables are not the most flexible - if a new step were to be made, the database schema would have to be updated and all the data reinstantiated 
-
-            <br><br>and for the RDB,
-            <br>&emsp;- To have all tables meet the properties of a valid RDB, the data had to be split a lot <b>(Figure 5)</b>.
-            <br>&emsp;&emsp; This means poor query runtime, since all tables have to be joined (O(nᵈ) for d tables) every query.
-            
-           
-            <br><br><div class="row"><div class="col"><b>Figure 5</b>Our final proposal RDB schema.            
+            <br>&emsp;- Lots of duplicate data and empty cells due to varying numbers of manufacturing steps per sample - e.g. some cells had an anti-solvent and some don't; this column has substantial empty entries.
+            <br>&emsp;- Fixed tables are not the most flexible - e.g. if a new step were to be added, the database schema would have to be updated and all the data reinstantiated 
+            <br>&emsp;- (For the RDB) To have all tables meet the properties of a valid RDB, the data had to be split a lot <b>(Figure 5)</b>.
+            This means poor query runtime, since all tables have to be joined (O(nᵈ) for d tables) every query.
+          </p>
+           <br><div class="row"><div class="col"><b>Figure 5</b>Our final proposal RDB schema.            
               <img src="resources/f5.png" class="halfw">There are nine tables; our implementation was able to only use six.
             </div></div>
-          
+          <p class="writeup">
+            <br><b>Graph Databases</b><br>
+            &emsp;We began by meeting an original SOLEIL member, Rishi Kumar, who built a prototype of a graph database solution using MongoDB, by using documents as nodes and using pointers to define relationships. There were several limits to this solution, notably the filesize limit on each document; storing large images seemed unfeasible. 
+            <br>&emsp;That said, Kumar's expertise with perovskite solar cell manufacturing made his approach to storing a cell's worklist very intuitive. Initially we considered linking chemical nodes with action relationships, but Kumar indicated that past a certain point, the chemicals undergo a string of actions, and it is more improtant to record the properties of those actions rather than the state of the chemicals. The "Results" section contains a visual representation of a worklist.
+            <br><br>&emsp;We committed to <a href="https://neo4j.com/">Neo4j</a>, which boasts that it <a href="https://neo4j.com/product/neo4j-graph-database/">"outshines relational databases in query performance by orders of magnitude"</a> due to a "native graph database" and its "graph-optimized query language", Cypher. Our final product involves a Neo4j graph database and a data import pipeline.
           </p>
 
-          
-          
-          <br><br><b class="subheading">data pipeline</b>
-          <p class="writeup">We built a data import pipeline to take PASCAL’s raw output, clean and consolidate the data, and update the graph DB (Figure 3)
-</p>
-
-
+          <br><b class="subheading">data pipeline</b>
+          <p class="writeup">&emsp;We built a data import pipeline in Python to take PASCAL’s raw output across multiple folders, clean and consolidate the data, and update the graph DB (<b>Figure 6</b>). This pipeline is backwards compatible and minimizes switching costs for the lab, which executes most of their code through Jupyter Notebooks.    
+          <br><br><div class="row"><div class="col"><b>Figure 6</b>           
+              <img src="resources/f6.png" class="tqw">
+            </div></div>
+        </p>
       </section>
 
       <section id="results" class = "bodytext">
         <div class="section_header"><div class="card_div"></div><h2>results</h2></div>
+        <p class="writeup">&emsp;<b>Figure 7</b> below is an example of one solar cell sample's worklist, and some of the properties in the summary metrics node. The worklists starts with the chemicals on the right, and proceeds according to the direction of the arrows.</p>
+        <br><div class="row"><div class="col"><b>Figure 7</b>           
+          <img src="resources/f7.png" class="tqw">
+        </div></div>
+        
+        <br><b class="subheading">performance</b>
+        <p class="writeup"><b>Runtime</b><br>&emsp;The figures below compare the query runtime of our graph database and RDB.
+          <br>&emsp;&emsp;- <b>Figure 8</b> shows that on a full database query, the graph DB (O(n)) outperforms the RDB (O(n⁶), since our solution has six tables).
+          <br>&emsp;&emsp;- <b>Figure 9</b> shows that on a query that requires no joins, the RDB (O(1)) outperforms the RDB (O(n)). In practice, however, queries that have no joins will almost never be used.
+        </p>
+        <br><div class="row"><div class="col"><b>Figure 8</b><img class="halfw" src="resources/f8.png">
+        </div><div class="col"><b>Figure 9</b><img  class="halfw" src="resources/f9.png"></div></div>
+        
+        <br><p class="writeup"><b>Memory</b><br>
+          &emsp;Neo4j has <a href="https://neo4j.com/developer/kb/understanding-data-on-disk/">documentation</a> on its maximum database size, node size limits, etc., but we were able to surpass them in our empirical tests. Functionally, we found Neo4j fails when asked to construct the relationships of 100,000 samples in one query (something never done in practice; samples are manufactured and in batches of ~40).           <b>Figure 10</b> shows how runtime increases as the data filesize increases on a single node.
+          <br>&emsp;We also found that many of these memory limits (maximum single CSV import filesize, for example) can be increased via changing the default limit in a config file. On further research we found that import limits may even be system dependent.
+          
+          <br><br><div class="row"><div class="col"><b>Figure 10</b>           
+            <img src="resources/f10.png" class="halfw">
+          </div></div> </p>
 
-        <p class="writeup">&emsp;After graphing the nodes and links from our cleaned/transformed data, we are able to generate a graph for each sample. The figure below shows the contents of one sample:</p>
-      </section>
+        <br><b class="subheading">limitations and future work</b>
+        <p class="writeup">&emsp;Beyond runtime and memory constraints imposed by Neo4j:
+          <br>&emsp;- <b>Hosting:</b> We used Neo4j Desktop. While sufficient, we were unable to find a way to expose the database to the web within the free/communty edition tier. The database is hosted on a lab computer that can be remotely accessed. Though we are able to connect to the database and run Cypher queries via a Jupyter Notebook, lab members will still have to remote access the computer.
+          <br>&emsp;- Implement a <b>data export pipeline</b> that takes data directly into analysis/machine learning, for example. We did not get to this as the novelty of migrating to a graph database meant the lab was still unsure of what output or tools would be most useful to them.
+          <br>&emsp;- <b>Add extra features into the DB</b>, like nominal data.
+        </p>
+        </section>
 
       <section id="conc" class = "bodytext">
-        <div class="section_header"><div class="card_div"></div><h2>conclusion</h2></div>
-        <p class="writeup">Our group implemented a working lab-to-database pipeline by replicating some existing ideas. In our discussions with Kumar and prior research, we found no similar solutions exist. 
-          The usefulness of this solution is largely derived from Neo4j’s Cypher - queries are relatively intuitive and simple to write, though we would need to communicate more with Fenning’s data team to see if there are necessary actions that Cypher does not support. 
+        <div class="section_header"><div class="card_div"></div><h2>acknowledgements</h2></div>
+        <p class="writeup">&emsp;Special thanks to:
+          <br>&emsp;- Prof. David Fenning, and SOLEIL members Deniz Cakan and KC Wong for resources and guidance throughout the project. Wong also provided Figures 1 and 2.
+          <br>&emsp;- Rishi Kumar for data strategy guidance.
         </p>
-
-        <br><br><b class="subheading">example queries</b>
-        <br><br><b class="subheading">limitations</b>
-        <p class="writeup">&emsp;The Methods section details how we have since solved two of the main limitations we had - the Google Drive rate limit, and the storage of characterization outputs. Our current challenge is working out hosting - Neo4j Docker only runs locally as far as we are aware, and other versions of Neo4j with managed databases are paid. 
-          <br>&emsp;There are also further financial and technical limitations with Neo4j itself, which has different tiers, pricing, memory limits, and other constraints we have yet to run into. Further research is needed; we detail this below.   </p>
-        <br><br><b class="subheading">future work</b>
-        <p class="writeup">&emsp;Our group has also determined some courses of action we would ideally take from here - there are several aspects of this solution that need to be fleshed out further:
-          <br>&emsp;An important step moving forward would be to meet with the lab team to talk about the best way to output “workable” data moving forward, so that at the end of our data pipeline they can run any queries or analyses they might need easily. 
-          <br>&emsp;Last but not least, we would need to look further into Neo4j for the future. Assuming this is a model that will be adopted and used for a while, we need to investigate pricing, size limits, and query effectiveness/efficiency as the database grows in size. We also would like to become more familiar with their Cypher query language to understand not only its limitations but also its potential for how complex queries can be.
-          </p>         
       </section>
 
       <section id="refs" class = "bodytext">
