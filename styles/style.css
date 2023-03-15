@@ -26,6 +26,7 @@
   margin: 0;
   padding: 0;
   color: var(--fontColour);
+  /* overflow-x: hidden; */
 }
 html {scroll-behavior: smooth; transition: 0.3s;}
 html, body { max-width: 100%; overflow-x: hidden;} 
@@ -39,14 +40,9 @@ h2 {
   letter-spacing: 0.02em;
 }
 
-.bodytext img{
-  max-width: 95vw;
-  object-fit: contain;
-}
-
-.tqw {height: 350px;}
-.halfw {height: 250px;}
-.qw {height: 150px;}
+.tqw {width: 50vw;}
+.halfw {width: 40vw;}
+.qw {width: 30vw;}
 
 h3 {font-family: var(--headerFont);}
  
@@ -86,6 +82,7 @@ h3 {font-family: var(--headerFont);}
   position: absolute;
   width: 100vw;
   height: auto;
+  overflow-x: hidden;
 }
 
 input:checked + .slider {background-color: #7eb8d8;}
@@ -272,4 +269,5 @@ footer a span {
   #nav a {
     display: none !important;
   }
+  #nav {width:0 !important;}
 }

@@ -92,8 +92,8 @@
               <br>&emsp;- The data associated with one sample's manufacturing process is unstructured and varies batch to batch.
               <br><br>
 
-              <div class="row"><div class="col"><b>Figure 1</b><img class="halfw" src="resources/f1.png">
-              </div><div class="col"><b>Figure 2</b><img  class="halfw" src="resources/f2.png"></div></div>
+              <div class="row"><div class="col"><b>Figure 1</b><img class="qw" src="resources/f1.png">
+              </div><div class="col"><b>Figure 2</b><img  class="qw" src="resources/f2.png"></div></div>
           </p>
           <br><b class="subheading">data description</b><br>
           <p class="writeup">
@@ -167,15 +167,15 @@
           <br>&emsp;&emsp;- <b>Figure 8</b> shows that on a full database query, the graph DB (O(n)) outperforms the RDB (O(n⁶), since our solution has six tables).
           <br>&emsp;&emsp;- <b>Figure 9</b> shows that on a query that requires no joins, the RDB (O(1)) outperforms the RDB (O(n)). In practice, however, queries that have no joins will almost never be used.
         </p>
-        <br><div class="row"><div class="col"><b>Figure 8</b><img class="halfw" src="resources/f8.png">
-        </div><div class="col"><b>Figure 9</b><img  class="halfw" src="resources/f9.png"></div></div>
+        <br><div class="row"><div class="col"><b>Figure 8</b><img class="qw" src="resources/f8.png">
+        </div><div class="col"><b>Figure 9</b><img  class="qw" src="resources/f9.png"></div></div>
         
         <br><p class="writeup"><b>Memory</b><br>
           &emsp;Neo4j has <a href="https://neo4j.com/developer/kb/understanding-data-on-disk/">documentation</a> on its maximum database size, node size limits, etc., but we were able to surpass them in our empirical tests. Functionally, we found Neo4j fails when asked to construct the relationships of 100,000 samples in one query (something never done in practice; samples are manufactured and in batches of ~40).           <b>Figure 10</b> shows how runtime increases as the data filesize increases on a single node.
           <br>&emsp;We also found that many of these memory limits (maximum single CSV import filesize, for example) can be increased via changing the default limit in a config file. On further research we found that import limits may even be system dependent.
           
           <br><br><div class="row"><div class="col"><b>Figure 10</b>           
-            <img src="resources/f10.png" class="halfw">
+            <img src="resources/f10.png" class="qw">
           </div></div> </p>
 
         <br><b class="subheading">limitations and future work</b>
@@ -202,8 +202,8 @@
       <br>
     </div>
   <!-- scripts  -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/ScrollTrigger.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/ScrollTrigger.min.js"></script> -->
 
-  <script src = "script.js"></script>
+  <!-- <script src = "script.js"></script> -->
   </body>
 </html>
