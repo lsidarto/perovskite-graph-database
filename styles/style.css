@@ -270,4 +270,8 @@ footer a span {
     display: none !important;
   }
   #nav {width:0 !important;}
+
+  .tqw {width: 80vw;}
+  .halfw {width: 70vw;}
+  .qw {width: 55vw;}
 }
