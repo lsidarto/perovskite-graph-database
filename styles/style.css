@@ -33,10 +33,15 @@ body {font-family: var(--bodyFont);}
 svg {transform: translateZ(0); /* Fix Safari rendering bug */}
 
 .col {flex: 1; display: flex; align-items: center; flex-direction: column;}
-.row {display: flex;flex-wrap: wrap;}
+.row {display: flex; flex-wrap: wrap; margin: 0 15% 0 15%; justify-content: center;}
 h2 {
   font-family: var(--headerFont);
   letter-spacing: 0.02em;
+}
+
+.bodytext img{
+  max-width: 95vw;
+  object-fit: contain;
 }
 
 .tqw {height: 350px;}
@@ -124,7 +129,6 @@ input:checked + .slider:before {
 #nav > li > a:hover {opacity: 1;}
 .sticky {background-color: var(--navbarColour);}
 
-/* .landing {height: 100vw;} */
 .page_title {
   position: relative;
   top: 18vh;
@@ -193,8 +197,10 @@ h3.page_title {
   height: 70vh;
   width: 80vw;
   margin-bottom: 10px;
+  display:inline;
 
 }
+
 .demo{
   width: 100vw;
   display: flex;
@@ -252,20 +258,9 @@ footer a span {
 }
 
 @media (max-width: 480px) { /* for mobile--leave at bottom so it overrides everything*/
-  .filler {
-    display: none;
-  }
-  .card_container{
-    flex-direction: column;
-    align-items: center;
-  }
-  .intro {
-    position: absolute;
-    right: 15vw;
-    text-align: center;
-  }
-  .page_title {font-size: 20vw;}
-  .intro p {font-size: 5vw;}
+  .page_title h3 {font-size: 8vw;}
+  .page_title h2 {font-size: 10vw;}
+
   .switch {
     position: fixed;
     bottom: 2%;
@@ -274,5 +269,7 @@ footer a span {
     width: 40px;
     height: 20px;
   }
-  .page_head_spacer {height:10vh;}
+  #nav a {
+    display: none !important;
+  }
 }
