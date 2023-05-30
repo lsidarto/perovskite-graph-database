@@ -26,7 +26,6 @@
   margin: 0;
   padding: 0;
   color: var(--fontColour);
-  /* overflow-x: hidden; */
 }
 html {scroll-behavior: smooth; transition: 0.3s;}
 html, body { max-width: 100%; overflow-x: hidden;} 
@@ -252,6 +251,14 @@ footer a span {
 .page_head_spacer{
   padding-top: 100vh;
   text-align: center;
+}
+
+.content a {
+  color: var(--linkColour);
+}
+
+.content a:hover{
+  color: var(--linkHoverColour);
 }
 
 @media (max-width: 480px) { /* for mobile--leave at bottom so it overrides everything*/
